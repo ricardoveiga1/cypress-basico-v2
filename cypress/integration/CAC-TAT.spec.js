@@ -238,6 +238,31 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('Talking About Testing').should('be.visible')
     })
 
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', function() {
+        cy.get('.success')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Mensagem enviada com sucesso.')
+          .invoke('hide')
+          .should('not.be.visible')
+        cy.get('.error')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Valide os campos obrigatórios!')
+          .invoke('hide')
+          .should('not.be.visible')
+      })
+
+      it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke', function() {
+          const longText = Cypress._.repeat('0123456789', 20) //vai multiplicar os 10 caracteres por 20 = 200
+
+        cy.get('#open-text-area')
+          .invoke('val', longText) //invocamos o valor de 200 caracteres e setamos o valor no text area
+          .should('have.value', longText)
+       
+      })
   
 
   })
